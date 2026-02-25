@@ -15,7 +15,8 @@ app.use(bodyParser.text({ type: "text/html" }));
 
 app.get("/", async (req, res) => {
   const { rows } = await pool.query("SELECT NOW()");
-  res.send(`Hello, World I love you! The time from the DB is ${rows[0].now}`);
+  res.set("cache-control", "no-store");
+  res.send(`CIRCADIAN-EDIT-${Date.now()} time=${rows[0].now}`);
 });
 
 app.listen(port, () => {
